@@ -1,34 +1,3 @@
-// var webpack = require("webpack");
-// var path = require("path"); // default node js library allow to resolve the path of app
-
-// //copy everything which has been preapared for serving into the dist folder which doesn't exist but create automatically
-// var DIST_DIR = path.resolve(__dirname, "dist");
-// var SRC_DIR = path.resolve(__dirname, "src");
-
-// var config = {
-//     entry: SRC_DIR + "/app/index.js",
-//     output: {
-//         path: DIST_DIR ,
-//         filename: "bundle.js",
-//         publicPath: "/" //defines public server
-//     },
-//     module: {
-//         rules: [
-//             {
-//                 test: /\.js?/,
-//                 include: SRC_DIR,
-//                 exclude: /node_modules/,
-//                 loader: "babel-loader",
-//                 query: {
-//                     presets: ["react", "es2015", "stage-2"]
-//                 }
-//             }
-//         ]
-//     }
-// };
-
-
-// module.exports = config; // here it pull the data from webpack config
 
 const webpack = require('webpack');
 
@@ -42,12 +11,22 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: {
+          loader:'babel-loader',
+          options: {
+            presets:['env', 'react', 'stage-2']
+          }
+        }
+      },
+      {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      loaders: ['style-loader', 'css-loader', 'sass-loader'],
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
   },
   output: {
     path: __dirname + '/dist',
